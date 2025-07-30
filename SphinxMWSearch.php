@@ -81,10 +81,10 @@ class SphinxMWSearch extends SearchDatabase {
 	 * @return SearchSuggestionSet
 	 */
 	protected function completionSearchBackend( $search ) {
-		global $wgEnableSphinxPrefixSearch, $wgEnableSphinxInfixSearch;
+		global $wgEnableSphinxPrefixSearch;
 
 		// fallback to parent if we don't want to do prefix searching
-		if ( $this->namespaces === [ -1 ] || !$wgEnableSphinxPrefixSearch) {
+		if ( $this->namespaces === [ -1 ] || !$wgEnableSphinxPrefixSearch ) {
 			return parent::completionSearchBackend( $search );
 		}
 
@@ -107,7 +107,7 @@ class SphinxMWSearch extends SearchDatabase {
 			}
 		}
 
-		return SearchSuggestionSet::fromTitles($results);
+		return SearchSuggestionSet::fromTitles( $results );
 	}
 
 	/**
