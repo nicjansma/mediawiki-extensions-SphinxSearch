@@ -423,4 +423,23 @@ class SphinxMWSearch extends SearchDatabase {
 
 		return '';
 	}
+
+	public static function regexTerm( $string, $wildcard ) {
+		$regex = preg_quote( $string, '/' );
+
+		if ( MediaWikiServices::getInstance()->getContentLanguage()->hasWordBreaks() ) {
+			if ( $wildcard ) {
+				// Don't cut off the final bit!
+				$regex = "\b$regex";
+			} else {
+				$regex = "\b$regex\b";
+			}
+		} else {
+			// For Chinese, words may legitimately abut other words in the text literal.
+			// Don't add \b boundary checks... note this could cause false positives
+			// for Latin chars.
+		}
+
+		return $regex;
+	}
 }

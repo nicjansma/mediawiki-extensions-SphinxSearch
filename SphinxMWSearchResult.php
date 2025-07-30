@@ -48,7 +48,14 @@ class SphinxMWSearchResult extends RevisionSearchResult {
 			$h = new SearchHighlighter();
 
 			if ( $wgAdvancedSearchHighlighting ) {
-				return $h->highlightText( $this->mText, $this->terms, $contextlines, $contextchars );
+				$searchTerms = [];
+
+				// Convert terms to regex format for highlighting
+				foreach ($this->terms as $term) {
+					$searchTerms[] = SphinxMWSearch::regexTerm( $term, true );
+				}
+
+				return $h->highlightText( $this->mText, $searchTerms, $contextlines, $contextchars );
 			} else {
 				return $h->highlightSimple( $this->mText, $this->terms, $contextlines, $contextchars );
 			}
