@@ -51,7 +51,7 @@ class SphinxMWSearchResult extends RevisionSearchResult {
 				$searchTerms = [];
 
 				// Convert terms to regex format for highlighting
-				foreach ($this->terms as $term) {
+				foreach ( $this->terms as $term ) {
 					$searchTerms[] = SphinxMWSearch::regexTerm( $term, true );
 				}
 
