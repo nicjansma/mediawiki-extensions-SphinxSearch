@@ -259,53 +259,6 @@ class SphinxMWSearch extends SearchDatabase {
 	}
 
 	/**
-	 * Prepare query for sphinx search daemon
-	 *
-	 * @param string $query
-	 * @return string rewritten query
-	 */
-	public function replacePrefixes( $query ) {
-		if ( trim( $query ) === '' ) {
-			return $query;
-		}
-
-		// ~ prefix is used to avoid near-term search, remove it now
-		if ( $query[ 0 ] === '~' ) {
-			$query = substr( $query, 1 );
-		}
-
-		$parts = preg_split( '/(")/', $query, -1, PREG_SPLIT_DELIM_CAPTURE );
-		$inquotes = false;
-		$rewritten = '';
-
-		foreach ( $parts as $key => $part ) {
-			if ( $part == '"' ) {
-				// stuff in quotes doesn't get rewritten
-				$rewritten .= $part;
-				$inquotes = !$inquotes;
-			} elseif ( $inquotes ) {
-				$rewritten .= $part;
-			} else {
-				if ( strpos( $query, ':' ) !== false ) {
-					$regexp = $this->preparePrefixRegexp();
-					$part = preg_replace_callback(
-						'/(^|[| :]|-)(' . $regexp . '):([^ ]+)/i',
-						[ $this, 'replaceQueryPrefix' ],
-						$part
-					);
-				}
-
-				$rewritten .= str_replace(
-					[ ' OR ', ' AND ' ],
-					[ ' | ', ' & ' ],
-					$part
-				);
-			}
-		}
-		return $rewritten;
-	}
-
-	/**
 	 * @return string Regexp to match namespaces and other prefixes
 	 */
 	private function preparePrefixRegexp() {
