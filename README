@@ -107,3 +107,4 @@ $wgSphinxSearchContextChars = 75;
   * `SphinxMWSearchResultSet`: Added required `extractResults()` override
   * Minor formatting and variable naming changes for readability and consistency
   * `extension.json` to v2 manifest
+  * `replaceText` removed (was deprecated in MW 1.32)
