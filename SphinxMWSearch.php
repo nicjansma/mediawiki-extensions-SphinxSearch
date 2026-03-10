@@ -377,6 +377,14 @@ class SphinxMWSearch extends SearchDatabase {
 		return '';
 	}
 
+	/**
+	 * Convert a string to a regex term for Sphinx search.
+	 *
+	 * @param string $string The term to convert
+	 * @param bool $wildcard Whether to add a wildcard at the end
+	 *
+	 * @return string The regex term
+	 */
 	public static function regexTerm( $string, $wildcard ) {
 		$regex = preg_quote( $string, '/' );
 
